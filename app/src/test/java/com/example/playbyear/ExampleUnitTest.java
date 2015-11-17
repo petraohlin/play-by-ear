@@ -1,4 +1,4 @@
-package com.example.playbyear;
+package com.duodev2.playbyear;
 
 import org.junit.Test;
 
