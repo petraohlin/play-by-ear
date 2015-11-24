@@ -23,6 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="60dp" />
+
     <TextView
         android:id="@+id/android:empty"
         android:layout_width="match_parent"
@@ -43,8 +44,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="?android:attr/progressBarStyleHorizontal"
-        android:layout_margin="30dp" />
-         />
+        android:layout_margin="30dp"
+        android:max="10"/>
+
 
 </LinearLayout>
 

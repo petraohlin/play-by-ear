@@ -1,6 +1,7 @@
 package com.duodev2.playbyear;
 
 import android.app.ListActivity;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -44,9 +45,9 @@ public class GameActivity extends ListActivity {
 
         loadNextQuestion(songs);
 
+        progressBar = (ProgressBar) findViewById(R.id.progressbar);
         nextButton = (Button) findViewById(R.id.nextBtn);
         nextButton.setVisibility(View.INVISIBLE);
-        progressBar = (ProgressBar) findViewById(R.id.progressbar);
     }
 
     @Override
@@ -58,6 +59,12 @@ public class GameActivity extends ListActivity {
         super.onListItemClick(list, v, position, id);
         v.setSelected(true);
         nextButton.setVisibility(View.VISIBLE);
+
+        if(questionNumber == 9)
+        {
+            Intent intent = new Intent(v.getContext(), EndActivity.class);
+            startActivity(intent);
+        }
     }
 
     // Called when the user clicks the Next Question
@@ -65,7 +72,7 @@ public class GameActivity extends ListActivity {
 
         loadNextQuestion(songs);
 
-        questionNumber = questionNumber + 10;
+        questionNumber++;
         progressBar.setProgress(questionNumber);
         nextButton.setVisibility(View.INVISIBLE);
     }
