@@ -3,4 +3,6 @@
     <string name="title_activity_game">GameActivity</string>
     <string name="no_opt"></string>
     <string name="button_next">Next one</string>
+    <string name="title_activity_end">EndActivity</string>
+    <string name="end">Fin</string>
 </resources>
