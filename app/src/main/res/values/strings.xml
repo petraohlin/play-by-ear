@@ -2,4 +2,5 @@
     <string name="app_name">PlayByEar</string>
     <string name="title_activity_game">GameActivity</string>
     <string name="no_opt"></string>
+    <string name="button_next">Next one</string>
 </resources>
