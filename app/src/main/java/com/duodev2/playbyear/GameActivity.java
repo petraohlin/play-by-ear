@@ -3,7 +3,9 @@ package com.duodev2.playbyear;
 import android.app.ListActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 public class GameActivity extends ListActivity {
 
@@ -15,5 +17,15 @@ public class GameActivity extends ListActivity {
         String[] items = new String[] {"Deportees","First Aid Kit","Robyn","De vet du"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.opt_row, R.id.text1, items);
         setListAdapter(adapter);
+    }
+
+    @Override
+    // list: The ListView where the click happened
+    // v: The item that was clicked with the ListView
+    // position: The position of the clicked item in the list
+    // id: The row ID of the item that was clicked
+    protected void onListItemClick(ListView list, View v, int position, long id){
+        super.onListItemClick(list,v,position,id);
+        v.setSelected(true);
     }
 }

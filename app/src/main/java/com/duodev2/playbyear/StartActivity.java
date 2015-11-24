@@ -56,6 +56,7 @@ public class StartActivity extends Activity implements PlayerNotificationCallbac
     private void setButtonClickListener(){
         Button toggleButton = (Button) findViewById(R.id.startBtn);
 
+        //Starts the game acticity
         toggleButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), GameActivity.class);
@@ -79,7 +80,7 @@ public class StartActivity extends Activity implements PlayerNotificationCallbac
                         mPlayer = player;
                         mPlayer.addConnectionStateCallback(StartActivity.this);
                         mPlayer.addPlayerNotificationCallback(StartActivity.this);
-                        mPlayer.play("spotify:user:spotifydiscover:playlist:40CisY8BXopJP0FhxOnrl7");
+                        //mPlayer.play("spotify:user:spotifydiscover:playlist:40CisY8BXopJP0FhxOnrl7");
                         mPlayConfig = mPlayConfig.createFor("spotify:user:spotifydiscover:playlist:40CisY8BXopJP0FhxOnrl7");
 
                     }
