@@ -2,6 +2,7 @@ package com.duodev2.playbyear;
 
 import android.app.ListActivity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -10,7 +11,6 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -57,8 +57,20 @@ public class GameActivity extends ListActivity {
     // id: The row ID of the item that was clicked
     protected void onListItemClick(ListView list, View v, int position, long id) {
         super.onListItemClick(list, v, position, id);
-        v.setSelected(true);
+
         nextButton.setVisibility(View.VISIBLE);
+
+        Random rn = new Random();
+        if(rn.nextInt(2) == 1) {
+            v.setPressed(false);
+            v.setSelected(true);
+            list.setEnabled(false);
+        }
+        else {
+            v.setSelected(false);
+            v.setPressed(true);
+            list.setEnabled(false);
+        }
 
         if(questionNumber == 9)
         {
