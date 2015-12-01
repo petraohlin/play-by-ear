@@ -2,7 +2,6 @@ package com.duodev2.playbyear;
 
 import android.app.ListActivity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,8 +9,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
-
 import com.spotify.sdk.android.authentication.AuthenticationClient;
 import com.spotify.sdk.android.authentication.AuthenticationRequest;
 import com.spotify.sdk.android.authentication.AuthenticationResponse;
@@ -121,16 +118,30 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
     // v: The item that was clicked with the ListView
     // position: The position of the clicked item in the list
     // id: The row ID of the item that was clicked
-    protected void onListItemClick(ListView list, View v, int position, long id) {
-        super.onListItemClick(list, v, position, id);
-        v.setSelected(true);
+    protected void onListItemClick(ListView l, View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
+
         nextButton.setVisibility(View.VISIBLE);
+
+        Random rn = new Random();
+        if(rn.nextInt(2) == 1)
+            toggleListView(l, v);
+        else {
+            toggleListView(l, v);
+        }
 
         if(questionNumber == 9)
         {
             Intent intent = new Intent(v.getContext(), EndActivity.class);
             startActivity(intent);
         }
+    }
+
+    //Help function to change all states on the listview and item
+    public void toggleListView(ListView l, View v) {
+        l.setEnabled(!l.isEnabled());
+        v.setSelected(!v.isSelected());
+        v.setPressed(!v.isPressed());
     }
 
     // Called when the user clicks the Next Question
@@ -142,6 +153,7 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
         questionNumber++;
         progressBar.setProgress(questionNumber);
         nextButton.setVisibility(View.INVISIBLE);
+        this.getListView().setEnabled(true);
     }
 
 
