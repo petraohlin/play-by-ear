@@ -48,6 +48,7 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
     private int questionNumber = 0;
     private Button nextButton;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,8 +82,6 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
         // get all music
         songs = db.getAllSongs();
 
-        loadNextQuestion(songs);
-
         progressBar = (ProgressBar) findViewById(R.id.progressbar);
         nextButton = (Button) findViewById(R.id.nextBtn);
         nextButton.setVisibility(View.INVISIBLE);
@@ -103,8 +102,7 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
                         mPlayer = player;
                         mPlayer.addConnectionStateCallback(GameActivity.this);
                         mPlayer.addPlayerNotificationCallback(GameActivity.this);
-                        //mPlayer.play("spotify:user:spotifydiscover:playlist:40CisY8BXopJP0FhxOnrl7");
-                        //mPlayConfig = mPlayConfig.createFor("spotify:user:spotifydiscover:playlist:40CisY8BXopJP0FhxOnrl7");
+                        loadNextQuestion(songs);
 
                     }
 
@@ -140,14 +138,18 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
 
         loadNextQuestion(songs);
 
+
         questionNumber++;
         progressBar.setProgress(questionNumber);
         nextButton.setVisibility(View.INVISIBLE);
     }
 
-    public void loadNextQuestion(List<String> list) {
+
+    private void loadNextQuestion(List<String> list) {
+
         List<String> alternatives = new LinkedList<String>();
         ArrayList<Integer> indexes = new ArrayList<Integer>();
+
         for (int i=1; i<list.size(); i++) {
             indexes.add(new Integer(i));
         }
@@ -158,6 +160,12 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.opt_row, R.id.text1, alternatives);
         setListAdapter(adapter);
+
+        // Get current answer
+        //Collections.shuffle(alternatives);
+
+        MusicItem correctMusicItem = db.getMusicItem(indexes.get(0));
+        mPlayer.play(correctMusicItem.getUri());
     }
 
 
