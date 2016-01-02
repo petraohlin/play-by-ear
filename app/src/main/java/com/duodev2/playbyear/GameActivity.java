@@ -72,8 +72,16 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
         db.addMusicItem(new MusicItem("Marit Bergman", "This Is The Year", "Swedish Pop", "spotify:track:6rBzSjdrihboUkZ0YyhWLc"));
         db.addMusicItem(new MusicItem("Maia Hirasawa", "I Found This Boy", "Swedish Pop", "spotify:track:2unK0jqfq1VvN1J4FxB3CL"));
         db.addMusicItem(new MusicItem("Robyn", "Dancing On My Own", "Swedish Pop", "spotify:track:4g6AXLnnxNDp1D7VWRZXRs"));
-        db.addMusicItem(new MusicItem("Petra Öhlin", "My Own Song", "Swedish Pop", "spotify:track:2WYUZcrkZuyXGgKE05UhEC"));
-        db.addMusicItem(new MusicItem("Mattias Palmgren", "Kill People, Burn Shit, Fuck School", "Swedish Pop", "spotify:track:2WYUZcrkZuyXGgKE05UhEC"));
+        db.addMusicItem(new MusicItem("Veronica Maggio", "Snälla bli min", "Swedish Pop", "spotify:track:2jEPQKvz7dh1pfpRyq6G1C"));
+        db.addMusicItem(new MusicItem("Veronica Maggio", "17 år", "Swedish Pop", "spotify:track:7MzmBmyI9KkyQJaPNLdtUi"));
+        db.addMusicItem(new MusicItem("Oskar Linnros", "25", "Swedish Pop", "spotify:track:4UtF1MAeEfY4StWJsXO3Q1"));
+        db.addMusicItem(new MusicItem("Little Jinder", "Vita Bergens klockor", "Swedish Pop", "spotify:track:07aAs90AMhw3schBMFN4vc"));
+        db.addMusicItem(new MusicItem("Laleh", "Colors", "Swedish Pop", "spotify:track:0I0flDWPoUqDmCIX90X2I8"));
+        db.addMusicItem(new MusicItem("Melissa Horn", "Du går nu", "Swedish Pop", "spotify:track:3k2gBhO3Dr7dZiFWCOKTWb"));
+        db.addMusicItem(new MusicItem("Elin Ruth", "Love", "Swedish Pop", "spotify:track:7Dm7yCuOIOW81wgGcCXdlX"));
+        db.addMusicItem(new MusicItem("Asha Ali", "Fire, fire", "Swedish Pop", "spotify:track:2k8Y82t7nDXpWq9mcVx7pU"));
+        db.addMusicItem(new MusicItem("Håkan Hellström", "En midsommarnattsdröm", "Swedish Pop", "spotify:track:2PD70CPXPOsnTxJdoaaN95"));
+        db.addMusicItem(new MusicItem("Markus Krunegård", "Du stör dig hårt på mig", "Swedish Pop", "spotify:track:1DAshXYxxLHC6otfko4Djs"));
 
 
         // get all music
@@ -132,6 +140,8 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
 
         if(questionNumber == 9)
         {
+            // Pause the player for now TODO: Flush the player
+            mPlayer.pause();
             Intent intent = new Intent(v.getContext(), EndActivity.class);
             startActivity(intent);
         }
