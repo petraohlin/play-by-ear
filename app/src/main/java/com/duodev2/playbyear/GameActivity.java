@@ -9,6 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
+
 import com.spotify.sdk.android.authentication.AuthenticationClient;
 import com.spotify.sdk.android.authentication.AuthenticationRequest;
 import com.spotify.sdk.android.authentication.AuthenticationResponse;
@@ -38,6 +40,8 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
 
     private Player mPlayer;
     private PlayConfig mPlayConfig;
+    private MusicItem correctMusicItem;
+    private int score = 0;
 
     private MusicDbHelper db;
     private List<String> songs;
@@ -46,6 +50,8 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
     private Button nextButton;
     private List<String> alternatives = new LinkedList<String>();
     private ArrayList<Integer> indexes = new ArrayList<Integer>();
+    private TextView scoreText;
+
 
 
     @Override
@@ -90,6 +96,7 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
         progressBar = (ProgressBar) findViewById(R.id.progressbar);
         nextButton = (Button) findViewById(R.id.nextBtn);
         nextButton.setVisibility(View.INVISIBLE);
+        scoreText = (TextView) findViewById(R.id.txtScore);
     }
 
     @Override
@@ -132,12 +139,20 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
         nextButton.setVisibility(View.VISIBLE);
 
         Random rn = new Random();
-        if(rn.nextInt(2) == 1)
+
+        String opt = alternatives.get(position);
+        String rightOpt = correctMusicItem.getSong();
+        //opt.equals(rightOpt)
+        if(true) {
             toggleListView(l, v);
+            score++;
+            scoreText.setText(Integer.toString(score));
+        }
         else {
             toggleListView(l, v);
         }
 
+        System.out.println(score);
         if(questionNumber == 9)
         {
             // Pause the player for now TODO: Flush the player
@@ -160,7 +175,6 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
 
         loadNextQuestion(songs);
 
-
         questionNumber++;
         progressBar.setProgress(questionNumber);
         nextButton.setVisibility(View.INVISIBLE);
@@ -172,6 +186,7 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
 
         alternatives.clear();
         indexes.clear();
+
 
         for (int i=1; i<list.size(); i++) {
             indexes.add(new Integer(i));
@@ -186,10 +201,10 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.opt_row, R.id.text1, alternatives);
         setListAdapter(adapter);
 
-        // Get current answer
-        // Collections.shuffle(alternatives);
 
-        MusicItem correctMusicItem = db.getMusicItem(indexes.get(0));
+        //Get current answer
+        //Collections.shuffle(alternatives);
+        correctMusicItem = db.getMusicItem(indexes.get(0));
         mPlayer.play(correctMusicItem.getUri());
 
 
