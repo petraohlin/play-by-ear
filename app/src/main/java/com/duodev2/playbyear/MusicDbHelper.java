@@ -215,8 +215,8 @@ public class MusicDbHelper extends SQLiteOpenHelper {
         // 3. updating row
         int i = db.update(TABLE_MUSIC, //table
                 values, // column/value
-                KEY_ID+" = ?", // selections
-                new String[] { String.valueOf(item.getId()) }); //selection args
+                KEY_ID + " = ?", // selections
+                new String[]{String.valueOf(item.getId())}); //selection args
 
         // 4. close
         db.close();
@@ -241,5 +241,12 @@ public class MusicDbHelper extends SQLiteOpenHelper {
         //log
         Log.d("deleteMusicItem", item.toString());
 
+    }
+
+    public Boolean isEmpty(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor mCursor = db.rawQuery("SELECT * FROM music", null);
+
+        return mCursor.getCount() == 0;
     }
 }
