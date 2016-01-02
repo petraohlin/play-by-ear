@@ -47,6 +47,13 @@
         android:layout_margin="30dp"
         android:max="10"/>
 
+    <TextView
+        android:id="@+id/txtScore"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/no_opt"
+        android:textSize="52sp"
+        android:gravity="center" />
 
 </LinearLayout>
 
