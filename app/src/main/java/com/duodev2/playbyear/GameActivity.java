@@ -203,6 +203,7 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
             alternatives.add(db.getMusicItem(indexes.get(i)));
         }
 
+        Collections.shuffle(alternatives);
 
         // Create the adapter to convert the array to views
         MusicsAdapter adapter = new MusicsAdapter(this, alternatives);
