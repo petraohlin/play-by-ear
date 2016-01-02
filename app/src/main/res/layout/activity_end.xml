@@ -12,8 +12,11 @@
        android:layout_height="match_parent"
        android:textSize="30sp"
        android:gravity="center"
-       android:text="@string/end"/>
-
+       android:text="@string/end"
+       android:id="@+id/textView"
+       android:layout_alignParentTop="true"
+       android:layout_alignParentLeft="true"
+       android:layout_alignParentStart="true" />
 
     <TextView
         android:id="@+id/txtScore"
@@ -22,5 +25,19 @@
         android:text="@string/no_opt"
         android:textSize="52sp"
         android:gravity="center" />
+
+    <Button
+        android:id="@+id/restartBtn"
+        android:text="@string/icon_restart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:background="@android:color/transparent"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_alignBottom="@+id/textView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="60dp"
+        android:textSize="100dp" />
 
 </RelativeLayout>

@@ -155,13 +155,14 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
         }
 
         //The game has come to an end
-        if(questionNumber == 9)
+        if(questionNumber == 1)
         {
             // Pause the player for now TODO: Flush the player
             mPlayer.pause();
             Intent intent = new Intent(v.getContext(), EndActivity.class);
             intent.putExtra("score", score);
             startActivity(intent);
+
         }
     }
 

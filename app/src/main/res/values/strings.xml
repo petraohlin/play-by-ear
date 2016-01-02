@@ -5,4 +5,5 @@
     <string name="button_next">Next one</string>
     <string name="title_activity_end">EndActivity</string>
     <string name="end">Congratulations!</string>
+    <string name="icon_restart">&#xf0e2;</string>
 </resources>

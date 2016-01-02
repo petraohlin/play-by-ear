@@ -13,6 +13,7 @@ import java.util.ArrayList;
 /**
  * Created by mattiaspalmgren on 2016-01-02.
  */
+
 public class MusicsAdapter extends ArrayAdapter<MusicItem> {
     public MusicsAdapter(Context context, ArrayList<MusicItem> musics) {
         super(context, 0, musics);
