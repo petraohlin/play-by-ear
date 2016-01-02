@@ -1,5 +1,6 @@
 package com.duodev2.playbyear;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -13,7 +14,7 @@ import android.widget.TextView;
 
 import com.duodev2.playbyear.R;
 
-public class EndActivity extends AppCompatActivity {
+public class EndActivity extends Activity {
 
     private TextView scoreText;
 
@@ -31,19 +32,14 @@ public class EndActivity extends AppCompatActivity {
         Typeface font = Typeface.createFromAsset(getAssets(), "fonts/fontawesome-webfont.ttf");
         Button button = (Button) findViewById( R.id.restartBtn);
         button.setTypeface(font);
-    }
 
-    private void setButtonClickListener(){
         Button toggleButton = (Button) findViewById(R.id.restartBtn);
-
-        //Starts the game activity
         toggleButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                System.out.println("hej");
+                Intent intent = new Intent(v.getContext(), GameActivity.class);
+                startActivity(intent);
             }
         });
-
-
     }
 
 }

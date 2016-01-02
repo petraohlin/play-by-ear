@@ -72,7 +72,6 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
 
         AuthenticationClient.openLoginActivity(this, REQUEST_CODE, request);
 
-
         db = new MusicDbHelper(this);
 
         Boolean isEmpty = db.isEmpty();
@@ -100,6 +99,8 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
         nextButton = (Button) findViewById(R.id.nextBtn);
         nextButton.setVisibility(View.INVISIBLE);
         scoreText = (TextView) findViewById(R.id.txtScore);
+        scoreText.setText(Integer.toString(score));
+
     }
 
     @Override
@@ -118,7 +119,6 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
                         mPlayer.addConnectionStateCallback(GameActivity.this);
                         mPlayer.addPlayerNotificationCallback(GameActivity.this);
                         loadNextQuestion();
-
                     }
 
                     @Override
