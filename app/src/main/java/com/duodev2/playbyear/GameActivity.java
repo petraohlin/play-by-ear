@@ -42,7 +42,7 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
     private Player mPlayer;
     private PlayConfig mPlayConfig;
     private MusicItem correctMusicItem;
-    private ArrayList<MusicItem> alternatives;
+
     private int score = 0;
 
     private MusicDbHelper db;
@@ -50,6 +50,8 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
     private ProgressBar progressBar;
     private int questionNumber = 0;
     private Button nextButton;
+    private ArrayList<MusicItem> alternatives = new ArrayList<MusicItem>();
+    private ArrayList<Integer> indexes = new ArrayList<Integer>();
     private TextView scoreText;
 
 
@@ -78,8 +80,16 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
         db.addMusicItem(new MusicItem("Marit Bergman", "This Is The Year", "Swedish Pop", "spotify:track:6rBzSjdrihboUkZ0YyhWLc"));
         db.addMusicItem(new MusicItem("Maia Hirasawa", "I Found This Boy", "Swedish Pop", "spotify:track:2unK0jqfq1VvN1J4FxB3CL"));
         db.addMusicItem(new MusicItem("Robyn", "Dancing On My Own", "Swedish Pop", "spotify:track:4g6AXLnnxNDp1D7VWRZXRs"));
-        db.addMusicItem(new MusicItem("Petra Öhlin", "My Own Song", "Swedish Pop", "spotify:track:2WYUZcrkZuyXGgKE05UhEC"));
-        db.addMusicItem(new MusicItem("Mattias Palmgren", "Kill People, Burn Shit, Fuck School", "Swedish Pop", "spotify:track:2WYUZcrkZuyXGgKE05UhEC"));
+        db.addMusicItem(new MusicItem("Veronica Maggio", "Snälla bli min", "Swedish Pop", "spotify:track:2jEPQKvz7dh1pfpRyq6G1C"));
+        db.addMusicItem(new MusicItem("Veronica Maggio", "17 år", "Swedish Pop", "spotify:track:7MzmBmyI9KkyQJaPNLdtUi"));
+        db.addMusicItem(new MusicItem("Oskar Linnros", "25", "Swedish Pop", "spotify:track:4UtF1MAeEfY4StWJsXO3Q1"));
+        db.addMusicItem(new MusicItem("Little Jinder", "Vita Bergens klockor", "Swedish Pop", "spotify:track:07aAs90AMhw3schBMFN4vc"));
+        db.addMusicItem(new MusicItem("Laleh", "Colors", "Swedish Pop", "spotify:track:0I0flDWPoUqDmCIX90X2I8"));
+        db.addMusicItem(new MusicItem("Melissa Horn", "Du går nu", "Swedish Pop", "spotify:track:3k2gBhO3Dr7dZiFWCOKTWb"));
+        db.addMusicItem(new MusicItem("Elin Ruth", "Love", "Swedish Pop", "spotify:track:7Dm7yCuOIOW81wgGcCXdlX"));
+        db.addMusicItem(new MusicItem("Asha Ali", "Fire, fire", "Swedish Pop", "spotify:track:2k8Y82t7nDXpWq9mcVx7pU"));
+        db.addMusicItem(new MusicItem("Håkan Hellström", "En midsommarnattsdröm", "Swedish Pop", "spotify:track:2PD70CPXPOsnTxJdoaaN95"));
+        db.addMusicItem(new MusicItem("Markus Krunegård", "Du stör dig hårt på mig", "Swedish Pop", "spotify:track:1DAshXYxxLHC6otfko4Djs"));
 
 
         // get all music
@@ -134,6 +144,7 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
         String opt = alternatives.get(position).getSong();
         String rightOpt = correctMusicItem.getSong();
 
+        //If right alternative is choosen
         if(opt.equals(rightOpt)){
             txt.setTextColor(Color.parseColor("#00802b"));
             score++;
@@ -146,8 +157,11 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
             l.setEnabled(!l.isEnabled());
         }
 
+        //The game has come to an end
         if(questionNumber == 9)
         {
+            // Pause the player for now TODO: Flush the player
+            mPlayer.pause();
             Intent intent = new Intent(v.getContext(), EndActivity.class);
             startActivity(intent);
         }
@@ -169,14 +183,16 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
 
     private void loadNextQuestion(List<String> list) {
 
-        alternatives = new ArrayList<MusicItem>();
-        ArrayList<Integer> indexes = new ArrayList<Integer>();
+
+        alternatives.clear();
+        indexes.clear();
 
         for (int i=1; i<list.size(); i++) {
             indexes.add(new Integer(i));
         }
 
         Collections.shuffle(indexes);
+
         for (int i=0; i<4; i++) {
             alternatives.add(db.getMusicItem(indexes.get(i)));
         }
@@ -194,6 +210,8 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
         //Collections.shuffle(alternatives);
         correctMusicItem = db.getMusicItem(indexes.get(0));
         mPlayer.play(correctMusicItem.getUri());
+
+
     }
 
 
