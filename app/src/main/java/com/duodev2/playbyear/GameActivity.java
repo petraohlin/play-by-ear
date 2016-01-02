@@ -44,6 +44,8 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
     private ProgressBar progressBar;
     private int questionNumber = 0;
     private Button nextButton;
+    private List<String> alternatives = new LinkedList<String>();
+    private ArrayList<Integer> indexes = new ArrayList<Integer>();
 
 
     @Override
@@ -159,13 +161,15 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
 
     private void loadNextQuestion(List<String> list) {
 
-        List<String> alternatives = new LinkedList<String>();
-        ArrayList<Integer> indexes = new ArrayList<Integer>();
+        alternatives.clear();
+        indexes.clear();
 
         for (int i=1; i<list.size(); i++) {
             indexes.add(new Integer(i));
         }
+
         Collections.shuffle(indexes);
+
         for (int i=0; i<4; i++) {
             alternatives.add(list.get(indexes.get(i)));
         }
@@ -174,10 +178,12 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
         setListAdapter(adapter);
 
         // Get current answer
-        //Collections.shuffle(alternatives);
+        // Collections.shuffle(alternatives);
 
         MusicItem correctMusicItem = db.getMusicItem(indexes.get(0));
         mPlayer.play(correctMusicItem.getUri());
+
+
     }
 
 
