@@ -4,5 +4,5 @@
     <string name="no_opt"></string>
     <string name="button_next">Next one</string>
     <string name="title_activity_end">EndActivity</string>
-    <string name="end">Fin</string>
+    <string name="end">Congratulations!</string>
 </resources>

@@ -44,12 +44,12 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
     private int score = 0;
 
     private MusicDbHelper db;
-    private List<String> songs;
     private ProgressBar progressBar;
     private int questionNumber = 0;
     private Button nextButton;
     private List<String> alternatives = new LinkedList<String>();
     private ArrayList<Integer> indexes = new ArrayList<Integer>();
+    private ArrayList<Integer> usedIndexes = new ArrayList<Integer>();
     private TextView scoreText;
 
 
@@ -90,9 +90,6 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
         db.addMusicItem(new MusicItem("Markus Krunegård", "Du stör dig hårt på mig", "Swedish Pop", "spotify:track:1DAshXYxxLHC6otfko4Djs"));
 
 
-        // get all music
-        songs = db.getAllSongs();
-
         progressBar = (ProgressBar) findViewById(R.id.progressbar);
         nextButton = (Button) findViewById(R.id.nextBtn);
         nextButton.setVisibility(View.INVISIBLE);
@@ -114,7 +111,7 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
                         mPlayer = player;
                         mPlayer.addConnectionStateCallback(GameActivity.this);
                         mPlayer.addPlayerNotificationCallback(GameActivity.this);
-                        loadNextQuestion(songs);
+                        loadNextQuestion();
 
                     }
 
@@ -158,6 +155,7 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
             // Pause the player for now TODO: Flush the player
             mPlayer.pause();
             Intent intent = new Intent(v.getContext(), EndActivity.class);
+            intent.putExtra("score", score);
             startActivity(intent);
         }
     }
@@ -173,7 +171,7 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
     // Called when the user clicks the Next Question
     public void nextQuestion(View view) {
 
-        loadNextQuestion(songs);
+        loadNextQuestion();
 
         questionNumber++;
         progressBar.setProgress(questionNumber);
@@ -182,31 +180,35 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
     }
 
 
-    private void loadNextQuestion(List<String> list) {
+    private void loadNextQuestion() {
 
         alternatives.clear();
         indexes.clear();
 
-
-        for (int i=1; i<list.size(); i++) {
-            indexes.add(new Integer(i));
+        List<String> list = db.getAllSongs();
+        for (int i=1; i<list.size()+1; i++) {
+            indexes.add(i);
         }
+
+        // Remove already used questions
+        indexes.removeAll(usedIndexes);
 
         Collections.shuffle(indexes);
 
         for (int i=0; i<4; i++) {
-            alternatives.add(list.get(indexes.get(i)));
+            alternatives.add(db.getMusicItem(indexes.get(i)).getSong());
         }
+
+        Collections.shuffle(alternatives);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.opt_row, R.id.text1, alternatives);
         setListAdapter(adapter);
 
 
         //Get current answer
-        //Collections.shuffle(alternatives);
+        usedIndexes.add(indexes.get(0));
         correctMusicItem = db.getMusicItem(indexes.get(0));
         mPlayer.play(correctMusicItem.getUri());
-
 
     }
 

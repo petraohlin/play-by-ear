@@ -120,7 +120,7 @@ public class MusicDbHelper extends SQLiteOpenHelper {
         //log
         Log.d("getMusicItem(" + id + ")", item.toString());
 
-        // 5. return book
+        // 5. return item
         return item;
     }
 
