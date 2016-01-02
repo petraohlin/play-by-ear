@@ -50,10 +50,8 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-
         // Request code that will be used to verify if the result comes from correct activity
         // Can be any integer
-
         AuthenticationRequest.Builder builder = new AuthenticationRequest.Builder(CLIENT_ID,
                 AuthenticationResponse.Type.TOKEN,
                 REDIRECT_URI);
@@ -145,6 +143,7 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
         v.setSelected(!v.isSelected());
         v.setPressed(!v.isPressed());
     }
+
 
     // Called when the user clicks the Next Question
     public void nextQuestion(View view) {
