@@ -2,6 +2,7 @@ package com.duodev2.playbyear;
 
 import android.app.ListActivity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -41,7 +42,7 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
     private Player mPlayer;
     private PlayConfig mPlayConfig;
     private MusicItem correctMusicItem;
-    private List<String> alternatives;
+    private ArrayList<MusicItem> alternatives;
     private int score = 0;
 
     private MusicDbHelper db;
@@ -120,7 +121,7 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
 
 
     @Override
-    // list: The ListView where the click happened
+    // l: The ListView where the click happened
     // v: The item that was clicked with the ListView
     // position: The position of the clicked item in the list
     // id: The row ID of the item that was clicked
@@ -129,35 +130,28 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
 
         nextButton.setVisibility(View.VISIBLE);
 
-        Random rn = new Random();
-
-        String opt = alternatives.get(position);
+        TextView txt = (TextView) v.findViewById(R.id.songName);
+        String opt = alternatives.get(position).getSong();
         String rightOpt = correctMusicItem.getSong();
-        //opt.equals(rightOpt)
-        if(true) {
-            toggleListView(l, v);
+
+        if(opt.equals(rightOpt)){
+            txt.setTextColor(Color.parseColor("#00802b"));
             score++;
             scoreText.setText(Integer.toString(score));
+            l.setEnabled(!l.isEnabled());
         }
         else {
-            toggleListView(l, v);
+            txt.setTextColor(Color.parseColor("#D80000"));
+            txt.setTextColor(Color.RED);
+            l.setEnabled(!l.isEnabled());
         }
 
-        System.out.println(score);
         if(questionNumber == 9)
         {
             Intent intent = new Intent(v.getContext(), EndActivity.class);
             startActivity(intent);
         }
     }
-
-    //Help function to change all states on the listview and item
-    public void toggleListView(ListView l, View v) {
-        l.setEnabled(!l.isEnabled());
-        v.setSelected(!v.isSelected());
-        v.setPressed(!v.isPressed());
-    }
-
 
     // Called when the user clicks the Next Question
     public void nextQuestion(View view) {
@@ -168,12 +162,14 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
         progressBar.setProgress(questionNumber);
         nextButton.setVisibility(View.INVISIBLE);
         this.getListView().setEnabled(true);
+
+
     }
 
 
     private void loadNextQuestion(List<String> list) {
 
-        alternatives = new LinkedList<String>();
+        alternatives = new ArrayList<MusicItem>();
         ArrayList<Integer> indexes = new ArrayList<Integer>();
 
         for (int i=1; i<list.size(); i++) {
@@ -182,11 +178,17 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
 
         Collections.shuffle(indexes);
         for (int i=0; i<4; i++) {
-            alternatives.add(list.get(indexes.get(i)));
+            alternatives.add(db.getMusicItem(indexes.get(i)));
         }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.opt_row, R.id.text1, alternatives);
-        setListAdapter(adapter);
+
+        // Create the adapter to convert the array to views
+        MusicsAdapter adapter = new MusicsAdapter(this, alternatives);
+
+        // Attach the adapter to a ListView
+        ListView listView = (ListView) findViewById(android.R.id.list);
+        listView.setAdapter(adapter);
+
 
         //Get current answer
         //Collections.shuffle(alternatives);
