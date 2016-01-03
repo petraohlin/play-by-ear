@@ -34,7 +34,12 @@ public class MusicsAdapter extends ArrayAdapter<MusicItem> {
         // Populate the data into the template view using the data object
         tvName.setText(musicItm.getSong());
 
-        // Return the completed view to render on screen
+        if (position % 2 == 1) {
+            convertView.setBackgroundResource(R.color.lightgrey);
+        } else {
+            convertView.setBackgroundResource(R.color.grey);
+        }
+            // Return the completed view to render on screen
         return convertView;
     }
 }
