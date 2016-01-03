@@ -2,10 +2,11 @@
     <string name="app_name">Play-by-ear</string>
     <string name="title_activity_game">GameActivity</string>
     <string name="no_opt"></string>
-    <string name="button_next">Next one</string>
     <string name="title_activity_end">EndActivity</string>
     <string name="end">Congratz!</string>
     <string name="end_result">You got</string>
     <string name="icon_restart">&#xf0e2;</string>
     <string name="icon_start">&#xf144;</string>
+    <string name="icon_next">&#xf0a9;</string>
+    <string name="icon_music">&#xf001;</string>
 </resources>

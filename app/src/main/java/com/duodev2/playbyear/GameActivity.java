@@ -4,6 +4,7 @@ import android.app.ListActivity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -57,6 +58,7 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
     private ArrayList<Integer> indexes = new ArrayList<Integer>();
     private ArrayList<Integer> usedIndexes = new ArrayList<Integer>();
     private TextView scoreText;
+    private TextView questionText;
 
 
     @Override
@@ -98,11 +100,18 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
         }
 
         progressBar = (ProgressBar) findViewById(R.id.progressbar);
+        questionText = (TextView) findViewById(R.id.question);
+
         nextButton = (Button) findViewById(R.id.nextBtn);
         nextButton.setVisibility(View.INVISIBLE);
         scoreText = (TextView) findViewById(R.id.txtScore);
-        scoreText.setText(Integer.toString(score));
+        scoreText.setText(Integer.toString(score).concat(" ".concat(getResources().getString(R.string.icon_music))));
+        runAnimation();
 
+        //Get font awesome for the restart button
+        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/fontawesome-webfont.ttf");
+        nextButton.setTypeface(font);
+        scoreText.setTypeface(font);
     }
 
     @Override
@@ -140,22 +149,23 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
     // id: The row ID of the item that was clicked
     protected void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
-
+        ImageView vinyl = (ImageView) findViewById(R.id.musicImage);
         nextButton.setVisibility(View.VISIBLE);
-
+        vinyl.clearAnimation();
         TextView txt = (TextView) v.findViewById(R.id.songName);
         String opt = alternatives.get(position).getSong();
         String rightOpt = correctMusicItem.getSong();
 
+
         //If right alternative is choosen
         if(opt.equals(rightOpt)){
-            txt.setTextColor(Color.parseColor("#00802b"));
+            txt.setTextColor(getResources().getColor(R.color.green));
             score++;
-            scoreText.setText(Integer.toString(score));
+            scoreText.setText(Integer.toString(score).concat(" ".concat(getResources().getString(R.string.icon_music))));
             l.setEnabled(!l.isEnabled());
         }
         else {
-            txt.setTextColor(Color.parseColor("#D80000"));
+            txt.setTextColor(getResources().getColor(R.color.red));
             txt.setTextColor(Color.RED);
             l.setEnabled(!l.isEnabled());
         }
@@ -179,11 +189,11 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
 
         questionNumber++;
         progressBar.setProgress(questionNumber);
+
         nextButton.setVisibility(View.INVISIBLE);
         this.getListView().setEnabled(true);
 
         runAnimation();
-
 
     }
 
@@ -222,6 +232,9 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
         usedIndexes.add(indexes.get(0));
         correctMusicItem = db.getMusicItem(indexes.get(0));
         mPlayer.play(correctMusicItem.getUri());
+
+        //Set questionText
+        questionText.setText("Hey, what's the name of the song?");
 
     }
 
