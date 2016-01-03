@@ -7,8 +7,11 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -54,7 +57,6 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
     private ArrayList<Integer> indexes = new ArrayList<Integer>();
     private ArrayList<Integer> usedIndexes = new ArrayList<Integer>();
     private TextView scoreText;
-
 
 
     @Override
@@ -159,7 +161,7 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
         }
 
         //The game has come to an end
-        if(questionNumber == 1)
+        if(questionNumber == 9)
         {
             // Pause the player for now TODO: Flush the player
             mPlayer.pause();
@@ -179,6 +181,8 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
         progressBar.setProgress(questionNumber);
         nextButton.setVisibility(View.INVISIBLE);
         this.getListView().setEnabled(true);
+
+        runAnimation();
 
 
     }
@@ -221,7 +225,12 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
 
     }
 
-
+    private void runAnimation(){
+        ImageView vinyl = (ImageView) findViewById(R.id.musicImage);
+        Animation a = AnimationUtils.loadAnimation(this, R.anim.scale);
+        vinyl.clearAnimation();
+        vinyl.startAnimation(a);
+    }
 
     @Override
     public void onLoggedIn() {
