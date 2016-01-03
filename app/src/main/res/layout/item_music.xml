@@ -7,6 +7,5 @@
     android:layout_gravity="center"
     android:gravity="center"
     android:textColor="@color/black"
-    android:textSize="30sp" >
-</TextView>
+    android:textSize="30sp" />
 
