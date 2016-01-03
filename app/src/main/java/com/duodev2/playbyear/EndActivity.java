@@ -25,7 +25,7 @@ public class EndActivity extends Activity {
 
         Intent intent = getIntent();
         int score = intent.getIntExtra("score", 0);
-        scoreText = (TextView) findViewById(R.id.txtScore);
+        scoreText = (TextView) findViewById(R.id.textScore);
         scoreText.setText(Integer.toString(score) + "/10 points");
 
         //Get font awesome for the restart button
