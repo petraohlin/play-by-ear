@@ -33,6 +33,9 @@ public class MusicsAdapter extends ArrayAdapter<MusicItem> {
 
         // Populate the data into the template view using the data object
         tvName.setText(musicItm.getSong());
+        tvName.setTextSize(45);
+
+        convertView.setPadding(0, 40, 0, 40);
 
         if (position % 2 == 1) {
             convertView.setBackgroundResource(R.color.row1);

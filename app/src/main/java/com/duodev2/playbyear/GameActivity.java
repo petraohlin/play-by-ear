@@ -188,7 +188,6 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
             t.setTextColor(getResources().getColor(R.color.transparent));
             if(!sucess && t.getText().equals(rightOpt)) {
                 t.setTextColor(getResources().getColor(R.color.green));
-                t.setTypeface(null, Typeface.BOLD);
             }
         }
 
@@ -199,9 +198,10 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
             score++;
             scoreText.setText(Integer.toString(score).concat(" ".concat(getResources().getString(R.string.icon_music))));
             runAnimation(scoreText, R.anim.scaleonce);
-        } else
+        } else {
             txtSelected.setTextColor(getResources().getColor(R.color.transred));
-
+            txtSelected.setTypeface(null, Typeface.BOLD);
+        }
         //Disable to ability to choose alternative
         l.setEnabled(!l.isEnabled());
     }
@@ -250,7 +250,7 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
         mPlayer.play(correctMusicItem.getUri());
 
         //Set questionText
-        questionText.setText("Hey, what's the name of the song?");
+        questionText.setText("Hey, what's the title?");
 
     }
 
