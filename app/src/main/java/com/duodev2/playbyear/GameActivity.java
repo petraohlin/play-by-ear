@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v4.widget.TextViewCompat;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
@@ -106,12 +107,14 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
         nextButton.setVisibility(View.INVISIBLE);
         scoreText = (TextView) findViewById(R.id.txtScore);
         scoreText.setText(Integer.toString(score).concat(" ".concat(getResources().getString(R.string.icon_music))));
-        runAnimation();
+        ImageView vinyl = (ImageView) findViewById(R.id.musicImage);
+        runAnimation(vinyl, R.anim.scale);
 
         //Get font awesome for the restart button
-        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/fontawesome-webfont.ttf");
-        nextButton.setTypeface(font);
-        scoreText.setTypeface(font);
+        Typeface awesomeFont = Typeface.createFromAsset(getAssets(), "fonts/fontawesome-webfont.ttf");
+        nextButton.setTypeface(awesomeFont);
+        scoreText.setTypeface(awesomeFont);
+
     }
 
     @Override
@@ -151,24 +154,18 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
         super.onListItemClick(l, v, position, id);
         ImageView vinyl = (ImageView) findViewById(R.id.musicImage);
         nextButton.setVisibility(View.VISIBLE);
-        vinyl.clearAnimation();
         TextView txt = (TextView) v.findViewById(R.id.songName);
+
+        //String for correct alternative and choosen alternative
         String opt = alternatives.get(position).getSong();
         String rightOpt = correctMusicItem.getSong();
+        String altText = txt.getText().toString();
+        String newText;
 
+        int rightPos = alternatives.indexOf(correctMusicItem);
 
-        //If right alternative is choosen
-        if(opt.equals(rightOpt)){
-            txt.setTextColor(getResources().getColor(R.color.green));
-            score++;
-            scoreText.setText(Integer.toString(score).concat(" ".concat(getResources().getString(R.string.icon_music))));
-            l.setEnabled(!l.isEnabled());
-        }
-        else {
-            txt.setTextColor(getResources().getColor(R.color.red));
-            txt.setTextColor(Color.RED);
-            l.setEnabled(!l.isEnabled());
-        }
+        //Go into pushed state
+        listPushedState(txt, rightOpt, l, opt.equals(rightOpt));
 
         //The game has come to an end
         if(questionNumber == 9)
@@ -177,33 +174,52 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
             mPlayer.pause();
             Intent intent = new Intent(v.getContext(), EndActivity.class);
             intent.putExtra("score", score);
+            vinyl.clearAnimation();
             startActivity(intent);
 
         }
     }
 
+    public void listPushedState(TextView txtSelected, String rightOpt, ListView l, Boolean sucess)  {
+
+        //Make all alternatives transparent and in case of wrong answer, show the right answer
+        for(int i = 0; i < l.getChildCount(); i++){
+            TextView t = (TextView) l.getChildAt(i).findViewById(R.id.songName);
+            t.setTextColor(getResources().getColor(R.color.transparent));
+            if(!sucess && t.getText().equals(rightOpt)) {
+                t.setTextColor(getResources().getColor(R.color.green));
+                t.setTypeface(null, Typeface.BOLD);
+            }
+        }
+
+        //Set chosen alternative
+        if(sucess) {
+            txtSelected.setTextColor(getResources().getColor(R.color.green));
+            txtSelected.setTypeface(null, Typeface.BOLD);
+            score++;
+            scoreText.setText(Integer.toString(score).concat(" ".concat(getResources().getString(R.string.icon_music))));
+            runAnimation(scoreText, R.anim.scaleonce);
+        } else
+            txtSelected.setTextColor(getResources().getColor(R.color.transred));
+
+        //Disable to ability to choose alternative
+        l.setEnabled(!l.isEnabled());
+    }
+
     // Called when the user clicks the Next Question
     public void nextQuestion(View view) {
-
         loadNextQuestion();
-
         questionNumber++;
         progressBar.setProgress(questionNumber);
-
         nextButton.setVisibility(View.INVISIBLE);
         this.getListView().setEnabled(true);
 
-        runAnimation();
-
     }
-
 
     private void loadNextQuestion() {
 
-
         alternatives.clear();
         indexes.clear();
-
         List<String> list = db.getAllSongs();
         for (int i=1; i<list.size()+1; i++) {
             indexes.add(i);
@@ -238,12 +254,13 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
 
     }
 
-    private void runAnimation(){
-        ImageView vinyl = (ImageView) findViewById(R.id.musicImage);
-        Animation a = AnimationUtils.loadAnimation(this, R.anim.scale);
-        vinyl.clearAnimation();
-        vinyl.startAnimation(a);
+    private void runAnimation(View v, int id){
+        Animation a = AnimationUtils.loadAnimation(this, id);
+        v.clearAnimation();
+        v.startAnimation(a);
     }
+
+
 
     @Override
     public void onLoggedIn() {

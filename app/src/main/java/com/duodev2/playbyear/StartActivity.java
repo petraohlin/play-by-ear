@@ -6,7 +6,9 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
+import org.w3c.dom.Text;
 
 
 public class StartActivity extends Activity {
@@ -22,6 +24,7 @@ public class StartActivity extends Activity {
         Typeface font = Typeface.createFromAsset(getAssets(), "fonts/fontawesome-webfont.ttf");
         Button button = (Button) findViewById( R.id.startBtn);
         button.setTypeface(font);
+
 
     }
 

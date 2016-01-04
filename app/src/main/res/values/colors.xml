@@ -7,6 +7,8 @@
     <color name="green">#00802b</color>
     <color name="white">#ffffff</color>
     <color name="red">#D80000</color>
-    <color name="lightgrey">#cccccc</color>
-    <color name="grey">#f2f2f2</color>
+    <color name="transred">#90D80000</color>
+    <color name="row1">#B2E393</color>
+    <color name="row2">#FFF5AC</color>
+    <color name="transparent">#60000000</color>
 </resources>

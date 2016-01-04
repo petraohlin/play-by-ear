@@ -9,4 +9,6 @@
     <string name="icon_start">&#xf144;</string>
     <string name="icon_next">&#xf0a9;</string>
     <string name="icon_music">&#xf001;</string>
+    <string name="icon_right">&#xf00c;</string>
+    <string name="icon_wrong">&#xf00d;</string>
 </resources>

@@ -35,9 +35,9 @@ public class MusicsAdapter extends ArrayAdapter<MusicItem> {
         tvName.setText(musicItm.getSong());
 
         if (position % 2 == 1) {
-            convertView.setBackgroundResource(R.color.lightgrey);
+            convertView.setBackgroundResource(R.color.row1);
         } else {
-            convertView.setBackgroundResource(R.color.grey);
+            convertView.setBackgroundResource(R.color.row2);
         }
             // Return the completed view to render on screen
         return convertView;

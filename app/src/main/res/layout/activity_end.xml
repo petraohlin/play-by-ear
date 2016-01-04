@@ -18,8 +18,9 @@
        android:layout_alignParentStart="true"
        android:layout_marginTop="80dp"
        android:layout_marginLeft="20dp"
-
-       android:textColor="#FFFFFF"
+       android:letterSpacing="-0.08"
+       android:textStyle="bold"
+       android:textColor="@color/white"
        />
 
     <TextView
@@ -28,11 +29,12 @@
         android:textSize="120sp"
         android:gravity="left"
         android:text="@string/end_result"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/white"
         android:layout_alignBottom="@+id/textView"
         android:layout_marginTop="200dp"
         android:layout_marginLeft="20dp"
-
+        android:letterSpacing="-0.08"
+        android:textStyle="bold"
         android:id="@+id/textScore"
         />
 
@@ -49,7 +51,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="60dp"
         android:textSize="100dp"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/white"
         />
 
 </RelativeLayout>
