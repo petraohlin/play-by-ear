@@ -38,6 +38,8 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class GameActivity extends ListActivity  implements PlayerNotificationCallback, ConnectionStateCallback {
 
@@ -199,14 +201,14 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
 
         //Make all alternatives transparent and in case of wrong answer, show the right answer
         for(int i = 0; i < l.getChildCount(); i++){
-            TextView t = (TextView) l.getChildAt(i).findViewById(R.id.songName);
-            TextView it= (TextView) l.getChildAt(i).findViewById(R.id.indication);
-            t.setTextColor(getResources().getColor(R.color.transparent));
+            TextView songTxt = (TextView) l.getChildAt(i).findViewById(R.id.songName);
+            TextView indicationTxt = (TextView) l.getChildAt(i).findViewById(R.id.indication);
+            songTxt.setTextColor(getResources().getColor(R.color.transparent));
 
-            if(!sucess && t.getText().equals(rightOpt)) {
-                t.setTextColor(getResources().getColor(R.color.green));
-                it.setTypeface(font);
-                it.setText(getResources().getString(R.string.icon_arrow_left));
+            if(!sucess && songTxt.getText().equals(rightOpt)) {
+                songTxt.setTextColor(getResources().getColor(R.color.green));
+                indicationTxt.setTypeface(font);
+                indicationTxt.setText(getResources().getString(R.string.icon_arrow_left));
             }
         }
 
@@ -216,17 +218,42 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
         //Set chosen alternative
         if(sucess) {
             txtSelected.setTextColor(getResources().getColor(R.color.green));
-
             indicationTxt.setText(getResources().getString(R.string.icon_check));
             indicationTxt.setTextColor(getResources().getColor(R.color.green));
-
             score++;
             scoreText.setText(Integer.toString(score).concat(" ".concat(getResources().getString(R.string.icon_music))));
             runAnimation(scoreText, R.anim.scaleonce);
         } else {
-            txtSelected.setTextColor(getResources().getColor(R.color.red));
+            /*txtSelected.setTextColor(getResources().getColor(R.color.red));
             indicationTxt.setText(getResources().getString(R.string.icon_wrong));
-            indicationTxt.setTextColor(getResources().getColor(R.color.red));
+            indicationTxt.setTextColor(getResources().getColor(R.color.red));*/
+            listTimeoutState(txtSelected, rightOpt, l, v);
+        }
+
+        //Disable to ability to choose alternative
+        l.setEnabled(!l.isEnabled());
+    }
+
+    public void listTimeoutState(TextView txtSelected, String rightOpt, ListView l, View v)  {
+        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/fontawesome-webfont.ttf");
+
+        //Make all alternatives transparent
+        for(int i = 0; i < l.getChildCount(); i++){
+            TextView songTxt = (TextView) l.getChildAt(i).findViewById(R.id.songName);
+            TextView iconTxt = (TextView) l.getChildAt(i).findViewById(R.id.indication);
+            songTxt.setTextColor(getResources().getColor(R.color.transparent));
+
+            if(songTxt.getText().equals(rightOpt)) {
+                songTxt.setTextColor(getResources().getColor(R.color.green));
+                iconTxt.setTypeface(font);
+                iconTxt.setText(getResources().getString(R.string.icon_arrow_left));
+            }
+            else {
+                songTxt.setTextColor(getResources().getColor(R.color.red));
+                iconTxt.setTypeface(font);
+                iconTxt.setText(getResources().getString(R.string.icon_wrong));
+                iconTxt.setTextColor(getResources().getColor(R.color.red));
+            }
         }
 
         //Disable to ability to choose alternative
@@ -285,6 +312,13 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
         animation.setDuration (900000); //in milliseconds
         animation.setInterpolator(new DecelerateInterpolator());
         animation.start();
+
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            public void run() {
+                System.out.println(" let the virtual dog out ");
+            }
+        }, 45000);
 
     }
 
