@@ -3,17 +3,17 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:orientation="vertical">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@color/greenSoft">
+        android:background="@color/greenSoft"
+        >
 
         <ImageView
             android:id="@+id/musicImage"
@@ -27,10 +27,8 @@
             android:id="@+id/question"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/no_opt"
             android:textSize="70sp"
             android:textStyle="bold"
-            android:letterSpacing="-0.08"
             android:textColor="@color/black"
             android:gravity="center"
             android:paddingTop="30dp"
@@ -45,18 +43,13 @@
         android:divider="@android:color/black"
         />
 
-    <TextView
-        android:id="@+id/android:empty"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/no_opt"
-        />
-
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:background="@color/white"
+        >
 
         <TextView
             android:id="@+id/txtScore"
@@ -65,10 +58,9 @@
             android:text="@string/no_opt"
             android:textSize="52sp"
             android:layout_weight="1"
-            android:layout_gravity="center_vertical"
+            android:layout_gravity="center"
             android:gravity="left"
             android:paddingLeft="50dp"
-            android:paddingBottom="30dp"
             android:textColor="@color/black"/>
 
         <Button
@@ -76,10 +68,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_weight="1"
             android:gravity="right"
             android:paddingRight="50dp"
             android:onClick="nextQuestion"
-            android:layout_weight="1"
             style="?android:attr/buttonStyleSmall"
             android:background="@android:color/transparent"
             android:text="@string/icon_next"
@@ -89,21 +81,21 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="fill_parent">
+        android:layout_height="10dp"
+        android:background="@color/red">
 
         <ProgressBar
             android:id="@+id/progressbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="?android:attr/progressBarStyleHorizontal"
+            android:padding="0dp"
             android:max="10"
             android:progressDrawable="@drawable/progress"
             android:layout_alignParentBottom="true"
             />
 
     </RelativeLayout>
-
-
 
 </LinearLayout>
 
