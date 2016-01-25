@@ -38,6 +38,8 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class GameActivity extends ListActivity  implements PlayerNotificationCallback, ConnectionStateCallback {
 
@@ -111,8 +113,7 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
         nextButton.setVisibility(View.INVISIBLE);
         scoreText = (TextView) findViewById(R.id.txtScore);
         scoreText.setText(Integer.toString(score).concat(" ".concat(getResources().getString(R.string.icon_music))));
-        ImageView vinyl = (ImageView) findViewById(R.id.musicImage);
-        runAnimation(vinyl, R.anim.scale);
+
 
         //Get font awesome for the restart button
         Typeface awesomeFont = Typeface.createFromAsset(getAssets(), "fonts/fontawesome-webfont.ttf");
@@ -245,6 +246,10 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
 
     private void loadNextQuestion() {
 
+        mPlayer.resume();
+        ImageView vinyl = (ImageView) findViewById(R.id.musicImage);
+        runAnimation(vinyl, R.anim.scale);
+
         alternatives.clear();
         indexes.clear();
         List<String> list = db.getAllSongs();
@@ -281,10 +286,17 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
 
         //Progressbar
         ProgressBar progressBar = (ProgressBar) findViewById(R.id.circularProgress);
-        ObjectAnimator animation = ObjectAnimator.ofInt (progressBar, "progress", 0, 100);
-        animation.setDuration (900000); //in milliseconds
+        ObjectAnimator animation = ObjectAnimator.ofInt (progressBar, "progress", 0, 500); // see this max value coming back here, we animale towards that value
+        animation.setDuration(10000); //in milliseconds
         animation.setInterpolator(new DecelerateInterpolator());
         animation.start();
+
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            public void run() {
+                mPlayer.pause();
+            }
+        }, 10000);
 
     }
 
