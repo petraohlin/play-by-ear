@@ -24,21 +24,19 @@ public class StartActivity extends Activity {
         Typeface font = Typeface.createFromAsset(getAssets(), "fonts/fontawesome-webfont.ttf");
         Button button = (Button) findViewById( R.id.startBtn);
         button.setTypeface(font);
-
-
     }
 
     private void setButtonClickListener(){
-        Button toggleButton = (Button) findViewById(R.id.startBtn);
+        final Button toggleButton = (Button) findViewById(R.id.startBtn);
 
         //Starts the game acticity
         toggleButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                toggleButton.setTextColor(getResources().getColor(R.color.green));
                 Intent intent = new Intent(v.getContext(), GameActivity.class);
                 startActivity(intent);
+                toggleButton.setTextColor(getResources().getColor(R.color.white));
             }
         });
     }
-
-
 }

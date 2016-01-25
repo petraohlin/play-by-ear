@@ -42,4 +42,10 @@ public class EndActivity extends Activity {
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, StartActivity.class);
+        startActivity(intent);
+    }
+
 }
