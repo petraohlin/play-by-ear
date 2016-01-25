@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -32,11 +34,16 @@ public class StartActivity extends Activity {
         //Starts the game acticity
         toggleButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                toggleButton.setTextColor(getResources().getColor(R.color.green));
+                runAnimation(toggleButton, R.anim.scaleonce);
                 Intent intent = new Intent(v.getContext(), GameActivity.class);
                 startActivity(intent);
-                toggleButton.setTextColor(getResources().getColor(R.color.white));
             }
         });
+    }
+
+    private void runAnimation(View v, int id){
+        Animation a = AnimationUtils.loadAnimation(this, id);
+        v.clearAnimation();
+        v.startAnimation(a);
     }
 }

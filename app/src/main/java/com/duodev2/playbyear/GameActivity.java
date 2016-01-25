@@ -165,7 +165,7 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
         int rightPos = alternatives.indexOf(correctMusicItem);
 
         //Go into pushed state
-        listPushedState(txt, rightOpt, l, opt.equals(rightOpt));
+        listPushedState(txt, rightOpt, l, opt.equals(rightOpt), v);
 
         //The game has come to an end
         if(questionNumber == 9)
@@ -180,27 +180,41 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
         }
     }
 
-    public void listPushedState(TextView txtSelected, String rightOpt, ListView l, Boolean sucess)  {
+    public void listPushedState(TextView txtSelected, String rightOpt, ListView l, Boolean sucess, View v)  {
+
+        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/fontawesome-webfont.ttf");
+        v.setBackgroundResource(R.color.pressed);
 
         //Make all alternatives transparent and in case of wrong answer, show the right answer
         for(int i = 0; i < l.getChildCount(); i++){
             TextView t = (TextView) l.getChildAt(i).findViewById(R.id.songName);
+            TextView it= (TextView) l.getChildAt(i).findViewById(R.id.indication);
             t.setTextColor(getResources().getColor(R.color.transparent));
+
             if(!sucess && t.getText().equals(rightOpt)) {
                 t.setTextColor(getResources().getColor(R.color.green));
+                it.setTypeface(font);
+                it.setText(getResources().getString(R.string.icon_arrow_left));
             }
         }
+
+        TextView indicationTxt = (TextView) v.findViewById(R.id.indication);
+        indicationTxt.setTypeface(font);
 
         //Set chosen alternative
         if(sucess) {
             txtSelected.setTextColor(getResources().getColor(R.color.green));
-            txtSelected.setTypeface(null, Typeface.BOLD);
+
+            indicationTxt.setText(getResources().getString(R.string.icon_check));
+            indicationTxt.setTextColor(getResources().getColor(R.color.green));
+
             score++;
             scoreText.setText(Integer.toString(score).concat(" ".concat(getResources().getString(R.string.icon_music))));
             runAnimation(scoreText, R.anim.scaleonce);
         } else {
-            txtSelected.setTextColor(getResources().getColor(R.color.transred));
-            txtSelected.setTypeface(null, Typeface.BOLD);
+            txtSelected.setTextColor(getResources().getColor(R.color.red));
+            indicationTxt.setText(getResources().getString(R.string.icon_wrong));
+            indicationTxt.setTextColor(getResources().getColor(R.color.red));
         }
 
         //Disable to ability to choose alternative
