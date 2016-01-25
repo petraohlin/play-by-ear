@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -24,21 +26,24 @@ public class StartActivity extends Activity {
         Typeface font = Typeface.createFromAsset(getAssets(), "fonts/fontawesome-webfont.ttf");
         Button button = (Button) findViewById( R.id.startBtn);
         button.setTypeface(font);
-
-
     }
 
     private void setButtonClickListener(){
-        Button toggleButton = (Button) findViewById(R.id.startBtn);
+        final Button toggleButton = (Button) findViewById(R.id.startBtn);
 
         //Starts the game acticity
         toggleButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                runAnimation(toggleButton, R.anim.scaleonce);
                 Intent intent = new Intent(v.getContext(), GameActivity.class);
                 startActivity(intent);
             }
         });
     }
 
-
+    private void runAnimation(View v, int id){
+        Animation a = AnimationUtils.loadAnimation(this, id);
+        v.clearAnimation();
+        v.startAnimation(a);
+    }
 }

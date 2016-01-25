@@ -11,4 +11,6 @@
     <string name="icon_music">&#xf001;</string>
     <string name="icon_right">&#xf00c;</string>
     <string name="icon_wrong">&#xf00d;</string>
+    <string name="icon_check">&#xf00c;</string>
+    <string name="icon_arrow_left">&#xf060;</string>
 </resources>
