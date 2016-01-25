@@ -340,6 +340,12 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
         v.startAnimation(a);
     }
 
+    protected void onPause(){
+        super.onPause();
+        if(mPlayer != null)
+            mPlayer.pause();
+
+    }
 
 
     @Override

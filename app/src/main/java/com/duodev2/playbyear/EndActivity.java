@@ -23,13 +23,18 @@ public class EndActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_end);
 
+        //Get font awesome for the icons
+        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/fontawesome-webfont.ttf");
+
         Intent intent = getIntent();
         int score = intent.getIntExtra("score", 0);
         scoreText = (TextView) findViewById(R.id.textScore);
-        scoreText.setText(Integer.toString(score) + "/10 points");
+        scoreText.setText(Integer.toString(score) + "/10");
 
-        //Get font awesome for the restart button
-        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/fontawesome-webfont.ttf");
+        TextView tones = (TextView) findViewById(R.id.tones);
+        tones.setTypeface(font);
+        tones.setText(R.string.icon_music);
+
         Button button = (Button) findViewById( R.id.restartBtn);
         button.setTypeface(font);
 
