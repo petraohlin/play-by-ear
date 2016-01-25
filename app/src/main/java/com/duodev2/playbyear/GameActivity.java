@@ -116,8 +116,7 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
         scoreText = (TextView) findViewById(R.id.txtScore);
         scoreText.setText(Integer.toString(score).concat(" ".concat(getResources().getString(R.string.icon_music))));
 
-
-        //Get font awesome for the restart button
+        //Get font awesome for the next button
         Typeface awesomeFont = Typeface.createFromAsset(getAssets(), "fonts/fontawesome-webfont.ttf");
         nextButton.setTypeface(awesomeFont);
         scoreText.setTypeface(awesomeFont);
@@ -130,7 +129,6 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
         startActivity(intent);
         mPlayer.pause();
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
@@ -173,13 +171,9 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
         nextButton.setVisibility(View.VISIBLE);
         TextView txt = (TextView) v.findViewById(R.id.songName);
 
-        //String for correct alternative and choosen alternative
+        //String for correct alternative and selected alternative
         String opt = alternatives.get(position).getSong();
         String rightOpt = correctMusicItem.getSong();
-        String altText = txt.getText().toString();
-        String newText;
-
-        int rightPos = alternatives.indexOf(correctMusicItem);
 
         //Go into pushed state
         listPushedState(txt, rightOpt, l, opt.equals(rightOpt), v);
@@ -197,6 +191,7 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
         }
     }
 
+    //Sets the list in appearance of pushed state. Indicating right answer and make the other alternatives less visible.
     public void listPushedState(TextView txtSelected, String rightOpt, ListView l, Boolean sucess, View v)  {
 
         Typeface font = Typeface.createFromAsset(getAssets(), "fonts/fontawesome-webfont.ttf");
@@ -218,7 +213,7 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
         TextView indicationTxt = (TextView) v.findViewById(R.id.indication);
         indicationTxt.setTypeface(font);
 
-        //Set chosen alternative
+        //Set selected alternative
         if(sucess) {
             txtSelected.setTextColor(getResources().getColor(R.color.green));
             indicationTxt.setText(getResources().getString(R.string.icon_check));
@@ -237,6 +232,7 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
         l.setEnabled(!l.isEnabled());
     }
 
+    //Modify the apperance of the list when the timeout is reached
     public void listTimeoutState(String rightOpt, ListView l)  {
         Typeface font = Typeface.createFromAsset(getAssets(), "fonts/fontawesome-webfont.ttf");
 
@@ -246,6 +242,7 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
             TextView iconTxt = (TextView) l.getChildAt(i).findViewById(R.id.indication);
             songTxt.setTextColor(getResources().getColor(R.color.transparent));
 
+            //And indicates the right alternative
             if(songTxt.getText().equals(rightOpt)) {
                 songTxt.setTextColor(getResources().getColor(R.color.green));
                 iconTxt.setTypeface(font);
@@ -274,11 +271,10 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
 
     }
 
+    //Loads next question
     private void loadNextQuestion() {
-
         ImageView vinyl = (ImageView) findViewById(R.id.musicImage);
         runAnimation(vinyl, R.anim.scale);
-
         alternatives.clear();
         indexes.clear();
         List<String> list = db.getAllSongs();
@@ -320,10 +316,10 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
         animation.setInterpolator(new DecelerateInterpolator());
         animation.start();
 
+        //Set the actual timer of the timeout
         timer = new Timer();
         timer.schedule(new TimerTask() {
             public void run() {
-
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -340,13 +336,13 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
         v.startAnimation(a);
     }
 
+    //Pause music when homebutton is clicked
     protected void onPause(){
         super.onPause();
         if(mPlayer != null)
             mPlayer.pause();
 
     }
-
 
     @Override
     public void onLoggedIn() {
