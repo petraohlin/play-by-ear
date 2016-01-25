@@ -202,6 +202,7 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
             txtSelected.setTextColor(getResources().getColor(R.color.transred));
             txtSelected.setTypeface(null, Typeface.BOLD);
         }
+
         //Disable to ability to choose alternative
         l.setEnabled(!l.isEnabled());
     }
