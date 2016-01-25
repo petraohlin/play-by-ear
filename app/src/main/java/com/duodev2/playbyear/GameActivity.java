@@ -1,5 +1,6 @@
 package com.duodev2.playbyear;
 
+import android.animation.ObjectAnimator;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.database.Cursor;
@@ -8,9 +9,12 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.widget.TextViewCompat;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -116,6 +120,14 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
         scoreText.setTypeface(awesomeFont);
 
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, StartActivity.class);
+        startActivity(intent);
+        mPlayer.pause();
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
@@ -252,6 +264,13 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
 
         //Set questionText
         questionText.setText("Hey, what's the title?");
+
+        //Progressbar
+        ProgressBar progressBar = (ProgressBar) findViewById(R.id.circularProgress);
+        ObjectAnimator animation = ObjectAnimator.ofInt (progressBar, "progress", 0, 100); // see this max value coming back here, we animale towards that value
+        animation.setDuration (100000); //in milliseconds
+        animation.setInterpolator(new DecelerateInterpolator());
+        animation.start();
 
     }
 
