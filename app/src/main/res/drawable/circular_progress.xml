@@ -9,7 +9,7 @@
 
     <shape
         android:useLevel="true"
-        android:innerRadiusRatio="2.3"
+        android:innerRadiusRatio="2.7"
         android:shape="ring"
         android:thickness="3.8sp"
 
