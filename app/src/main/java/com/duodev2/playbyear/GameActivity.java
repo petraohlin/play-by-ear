@@ -281,8 +281,8 @@ public class GameActivity extends ListActivity  implements PlayerNotificationCal
 
         //Progressbar
         ProgressBar progressBar = (ProgressBar) findViewById(R.id.circularProgress);
-        ObjectAnimator animation = ObjectAnimator.ofInt (progressBar, "progress", 0, 100); // see this max value coming back here, we animale towards that value
-        animation.setDuration (100000); //in milliseconds
+        ObjectAnimator animation = ObjectAnimator.ofInt (progressBar, "progress", 0, 100);
+        animation.setDuration (900000); //in milliseconds
         animation.setInterpolator(new DecelerateInterpolator());
         animation.start();
 

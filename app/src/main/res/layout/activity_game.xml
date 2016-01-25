@@ -38,7 +38,6 @@
                 android:max="100"
                 android:indeterminateDrawable="@drawable/circular_progress"
                 android:visibility="visible" />
-
         </RelativeLayout>
 
         <TextView
