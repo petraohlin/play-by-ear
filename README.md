@@ -1,2 +1,6 @@
 # play-by-ear
-Music quiz for Android
+🎤  music quiz for android
+
+![play-by-ear](playbyear.png)
+
+
